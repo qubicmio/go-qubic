@@ -54,9 +54,9 @@ func TestGetPublicKey(t *testing.T) {
 
 func TestCreateWallet(t *testing.T) {
 	expected := Wallet{
-		PubKey:          [32]byte{230, 252, 58, 173, 75, 89, 77, 130, 191, 49, 3, 161, 16, 22, 216, 13, 232, 131, 222, 135, 59, 206, 196, 142, 144, 57, 98, 134, 80, 59, 38, 19},
-		PrivKey:         [32]byte{255, 152, 128, 102, 167, 172, 117, 67, 207, 98, 121, 87, 47, 195, 144, 191, 211, 225, 145, 187, 93, 83, 248, 238, 217, 120, 166, 88, 206, 146, 124, 225},
-		common.Identity: "QJRRSSKMJRDKUDTYVNYGAMQPULKAMILQQYOWBEXUDEUWQUMNGDHQYLOAJMEB",
+		PubKey:   [32]byte{230, 252, 58, 173, 75, 89, 77, 130, 191, 49, 3, 161, 16, 22, 216, 13, 232, 131, 222, 135, 59, 206, 196, 142, 144, 57, 98, 134, 80, 59, 38, 19},
+		PrivKey:  [32]byte{255, 152, 128, 102, 167, 172, 117, 67, 207, 98, 121, 87, 47, 195, 144, 191, 211, 225, 145, 187, 93, 83, 248, 238, 217, 120, 166, 88, 206, 146, 124, 225},
+		Identity: "QJRRSSKMJRDKUDTYVNYGAMQPULKAMILQQYOWBEXUDEUWQUMNGDHQYLOAJMEB",
 	}
 
 	got, err := NewWallet(testSeed)
