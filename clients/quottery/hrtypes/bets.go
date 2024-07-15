@@ -153,3 +153,34 @@ func quotteryGetMinute(data uint32) int {
 func quotteryGetSecond(data uint32) int {
 	return int(data & 0b111111)
 }
+
+type ActiveBets struct {
+	Count  uint32
+	BetIDs []uint32
+}
+
+func (ab *ActiveBets) FromNodeType(m nodetypes.ActiveBets) error {
+	abc := activeBetsConverter{rawActiveBets: m}
+
+	converted := abc.toType()
+	*ab = converted
+
+	return nil
+}
+
+type activeBetsConverter struct {
+	rawActiveBets nodetypes.ActiveBets
+}
+
+func (abc *activeBetsConverter) toType() ActiveBets {
+	betIDs := make([]uint32, 0, abc.rawActiveBets.Count)
+
+	for _, b := range abc.rawActiveBets.BetIDs {
+		betIDs = append(betIDs, b)
+	}
+
+	return ActiveBets{
+		Count:  abc.rawActiveBets.Count,
+		BetIDs: betIDs,
+	}
+}

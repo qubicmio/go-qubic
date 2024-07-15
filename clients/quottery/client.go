@@ -46,7 +46,7 @@ func (c *Client) GetBetInfo(ctx context.Context, betID uint32) (hrtypes.BetInfo,
 	return bi, nil
 }
 
-func (c *Client) GetActiveBets(ctx context.Context) (nodetypes.ActiveBets, error) {
+func (c *Client) GetActiveBets(ctx context.Context) (hrtypes.ActiveBets, error) {
 	rcf := connector.RequestContractFunction{
 		ContractIndex: nodetypes.QuotteryContractID,
 		InputType:     nodetypes.ViewID.ActiveBet,
@@ -56,10 +56,16 @@ func (c *Client) GetActiveBets(ctx context.Context) (nodetypes.ActiveBets, error
 	var result nodetypes.ActiveBets
 	err := c.connector.PerformSmartContractRequest(ctx, rcf, nil, &result)
 	if err != nil {
-		return nodetypes.ActiveBets{}, errors.Wrap(err, "handling smart contract request")
+		return hrtypes.ActiveBets{}, errors.Wrap(err, "handling smart contract request")
 	}
 
-	return result, nil
+	var ab hrtypes.ActiveBets
+	err = ab.FromNodeType(result)
+	if err != nil {
+		return hrtypes.ActiveBets{}, errors.Wrap(err, "converting from node type")
+	}
+
+	return ab, nil
 }
 
 var QuotteryGetBetInfoRequest = connector.RequestContractFunction{
