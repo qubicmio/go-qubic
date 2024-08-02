@@ -116,13 +116,21 @@ func PubKeysToIdentities(pubKeys [][32]byte, isLowercase bool) ([]Identity, erro
 		if identity == [32]byte{} {
 			continue
 		}
-		id, err := GetIDFrom32Bytes(identity, isLowercase)
+		id, err := getIDFrom32Bytes(identity, isLowercase)
 		if err != nil {
 			return nil, errors.Wrapf(err, "getting identity from pubKey hex %s", hex.EncodeToString(identity[:]))
 		}
 		identities = append(identities, id)
 	}
 	return identities, nil
+}
+
+func PubKeyToIdentity(pubKey [32]byte) (Identity, error) {
+	return getIDFrom32Bytes(pubKey, false)
+}
+
+func DigestToTxID(digest [32]byte) (Identity, error) {
+	return getIDFrom32Bytes(digest, true)
 }
 
 func BinarySerializeLE(data interface{}) ([]byte, error) {
@@ -139,7 +147,7 @@ func BinarySerializeLE(data interface{}) ([]byte, error) {
 	return buff.Bytes(), nil
 }
 
-func GetIDFrom32Bytes(data [32]byte, isLowercase bool) (Identity, error) {
+func getIDFrom32Bytes(data [32]byte, isLowercase bool) (Identity, error) {
 	var id Identity
 	err := id.FromPubKey(data, isLowercase)
 	if err != nil {

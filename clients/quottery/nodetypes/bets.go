@@ -14,7 +14,7 @@ const (
 )
 
 type viewID struct {
-	Fee                uint16
+	BasicInfo          uint16
 	BetInfo            uint16
 	BetDetail          uint16
 	ActiveBet          uint16
@@ -29,7 +29,7 @@ type funcID struct {
 }
 
 var ViewID = viewID{
-	Fee:                1,
+	BasicInfo:          1,
 	BetInfo:            2,
 	BetDetail:          3,
 	ActiveBet:          4,
@@ -115,20 +115,31 @@ func (ab *ActiveBets) UnmarshallFromReader(r io.Reader) error {
 	return nil
 }
 
-type BetFees struct {
-	FeePerSlotPerDay     uint64
-	GameOperatorFee      uint64
-	ShareholderFee       uint64
-	MinimumBetSlotAmount uint64
-	GameOperatorPubKey   [32]byte
+type BasicInfo struct {
+	FeePerSlotPerDay           uint64
+	GameOperatorFee            uint64
+	ShareholderFee             uint64
+	MinimumBetSlotAmount       uint64
+	BurnFee                    uint64
+	IssuedBets                 uint64
+	MoneyFlow                  uint64
+	MoneyFlowIssueBet          uint64
+	MoneyFlowJoinBet           uint64
+	MoneyFlowFinalizeBet       uint64
+	EarnedAmountForShareholder uint64
+	PaidAmountForShareholder   uint64
+	EarnedAmountForBetWinner   uint64
+	DistributedAmount          uint64
+	BurnedAmount               uint64
+	GameOperatorPubKey         [32]byte
 }
 
-func (bf *BetFees) UnmarshallFromReader(r io.Reader) error {
+func (bi *BasicInfo) UnmarshallFromReader(r io.Reader) error {
 	var header connector.RequestResponseHeader
 
 	err := binary.Read(r, binary.BigEndian, &header)
 	if err != nil {
-		return errors.Wrap(err, "reading quottery active bets header")
+		return errors.Wrap(err, "reading quottery basic info header")
 	}
 
 	if header.Type == connector.EndResponse {
@@ -139,9 +150,9 @@ func (bf *BetFees) UnmarshallFromReader(r io.Reader) error {
 		return errors.Errorf("Invalid header type, expected %d, found %d", ContractFunctionTypeResponse, header.Type)
 	}
 
-	err = binary.Read(r, binary.LittleEndian, bf)
+	err = binary.Read(r, binary.LittleEndian, bi)
 	if err != nil {
-		return errors.Wrap(err, "reading quottery active bets data")
+		return errors.Wrap(err, "reading quottery basic info data")
 	}
 
 	return nil

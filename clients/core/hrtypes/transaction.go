@@ -42,17 +42,17 @@ func (c *txConverter) toType() (Transaction, error) {
 		return Transaction{}, errors.Wrap(err, "getting tx digest")
 	}
 
-	id, err := common.GetIDFrom32Bytes(digest, true)
+	id, err := common.DigestToTxID(digest)
 	if err != nil {
 		return Transaction{}, errors.Wrap(err, "getting tx id")
 	}
 
-	sourceID, err := common.GetIDFrom32Bytes(c.rawTx.SourcePublicKey, false)
+	sourceID, err := common.PubKeyToIdentity(c.rawTx.SourcePublicKey)
 	if err != nil {
 		return Transaction{}, errors.Wrap(err, "getting tx source id")
 	}
 
-	destID, err := common.GetIDFrom32Bytes(c.rawTx.DestinationPublicKey, false)
+	destID, err := common.PubKeyToIdentity(c.rawTx.DestinationPublicKey)
 	if err != nil {
 		return Transaction{}, errors.Wrap(err, "getting tx dest id")
 	}
@@ -115,7 +115,7 @@ func (c *transactionsStatusConverter) toType() (TransactionsStatus, error) {
 	statuses := make(map[common.Identity]bool)
 
 	for index, digest := range c.rawTxStatus.TransactionDigests {
-		id, err := common.GetIDFrom32Bytes(digest, true)
+		id, err := common.DigestToTxID(digest)
 		if err != nil {
 			return TransactionsStatus{}, errors.Wrapf(err, "getting tx id for tx with digest hex: %s", hex.EncodeToString(digest[:]))
 		}

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package qubic.v1;
+
+option go_package = "github.com/qubic/go-qubic/v1/qubicpb";
+import "google/protobuf/timestamp.proto";
+
+message BetInfo {
+  message Option {
+    string description = 1;
+    uint32 state = 2;
+  }
+
+  message Oracle {
+    string id = 1;
+    float fee_percentage = 2;
+  }
+
+  message Vote {
+    uint32 oracle_id = 1;
+    uint32 won_option = 2;
+  }
+
+  uint32 id = 1;
+  string creator_id = 2;
+  string description = 3;
+  repeated Option options = 4;
+  repeated Oracle oracles = 5;
+  repeated Vote votes = 6;
+  uint64 minimum_bet_amount = 7;
+  uint32 maximum_bet_slot_per_option = 8;
+
+  google.protobuf.Timestamp open_time = 9;
+  google.protobuf.Timestamp close_time = 10;
+  google.protobuf.Timestamp end_time = 11;
+}
+
+message ActiveBets {
+  repeated uint32 bet_ids = 1;
+}
+
+message BasicInfo {
+  message Fees {
+    uint64 slot_per_day = 1;
+    uint64 game_operator = 2;
+    uint64 shareholder = 3;
+    uint64 burn = 4;
+  }
+
+  message MoneyFlowData {
+    uint64 total = 1;
+    uint64 issue_bet = 2;
+    uint64 join_bet = 3;
+    uint64 finalize_bet = 4;
+  }
+
+  message EconomicsData {
+    uint64 earned_amount_shareholder = 1;
+    uint64 paid_amount_shareholder = 2;
+    uint64 earned_amount_bet_winner = 3;
+    uint64 distributed_amount = 4;
+    uint64 burned_amount = 5;
+  }
+
+  Fees fees = 1;
+  uint64 minimum_bet_slot_amount = 2;
+  uint64 issued_bets = 3;
+  MoneyFlowData money_flow_data = 4;
+  EconomicsData economics_data = 5;
+  string game_operator_id = 6;
+}
+
+message BetOptionBettors {
+  repeated string bettor_ids = 1;
+}

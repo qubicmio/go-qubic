@@ -41,7 +41,7 @@ type addressInfoConverter struct {
 }
 
 func (c *addressInfoConverter) toType() (AddressInfo, error) {
-	id, err := common.GetIDFrom32Bytes(c.rawAddressInfo.AddressData.PublicKey, false)
+	id, err := common.PubKeyToIdentity(c.rawAddressInfo.AddressData.PublicKey)
 	if err != nil {
 		return AddressInfo{}, errors.Wrapf(err, "getting address id from pubkey hex: %s", hex.EncodeToString(c.rawAddressInfo.AddressData.PublicKey[:]))
 	}
@@ -51,7 +51,7 @@ func (c *addressInfoConverter) toType() (AddressInfo, error) {
 		if sibling == [32]byte{} {
 			continue
 		}
-		siblingID, err := common.GetIDFrom32Bytes(sibling, false)
+		siblingID, err := common.PubKeyToIdentity(sibling)
 		if err != nil {
 			return AddressInfo{}, errors.Wrapf(err, "getting address id from sibling hex: %s", hex.EncodeToString(sibling[:]))
 		}
