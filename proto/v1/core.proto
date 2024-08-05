@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package qubic.v1;
+
+option go_package = "github.com/qubic/go-qubic/v1/qubicpb";
+import "google/protobuf/timestamp.proto";
+
+message EntityInfo {
+  message Entity {
+    string id = 1;
+    int64 incoming_amount = 2;
+    int64 outgoing_amount = 3;
+    uint32 number_of_incoming_transfers = 4;
+    uint32 number_of_outgoing_transfers = 5;
+    uint32 latest_incoming_transfer_tick = 6;
+    uint32 latest_outgoing_transfer_tick = 7;
+  }
+
+  Entity entity = 1;
+  uint32 valid_for_tick = 2;
+  int32 spectrum_index = 3;
+  repeated string sibling_ids = 4;
+}
+
+message Computors {
+  uint32 epoch = 1;
+  repeated string identities = 2;
+  string signature = 3;
+}
+
+message QuorumVote {
+  message SharedVote {
+    uint32 epoch = 1;
+    uint32 tick = 2;
+    google.protobuf.Timestamp timestamp = 4;
+    string prev_resource_testing_digest = 5;
+    string prev_spectrum_digest = 6;
+    string prev_universe_digest = 7;
+    string prev_computer_digest = 8;
+    string tx_digest = 9;
+  }
+
+  message GroupedSharedVotes {
+    SharedVote vote = 1;
+    int32 number_of_votes = 2;
+  }
+
+  message SaltedVote {
+    string resource_testing_digest = 1;
+    string spectrum_digest = 2;
+    string universe_digest = 3;
+    string computer_digest = 4;
+    string expected_next_tick_tx_digest = 5;
+    string signature = 6;
+  }
+
+  repeated GroupedSharedVotes shared_votes = 1;
+  map<uint32, SaltedVote> salted_votes_per_computor_index = 2;
+}
+
+message TickData {
+  uint32 computor_index = 1;
+  uint32 epoch = 2;
+  uint32 tick = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  bytes var_struct = 5;
+  bytes time_lock = 6;
+  repeated string transaction_ids = 7;
+  repeated int64 contract_fees = 8;
+  string signature = 9;
+}
+
+message TickInfo {
+  uint32 tick = 1;
+  uint32 duration_in_seconds = 2;
+  uint32 epoch = 3;
+  uint32 number_of_aligned_votes = 4;
+  uint32 number_of_misaligned_votes = 5;
+  uint32 initial_tick_of_epoch = 6;
+}
+
+message Transaction {
+  string source_id = 1;
+  string dest_id = 2;
+  int64 amount = 3;
+  uint32 tick = 4;
+  uint32 input_type = 5;
+  uint32 input_size = 6;
+  string input = 7;
+  string signature = 8;
+  string tx_id = 9;
+  string digest = 10;
+}
+
+message TickTransactionsStatus {
+  uint32 tick = 1;
+  uint32 current_tick_of_node = 2;
+  uint32 tx_count = 3;
+  map<string, bool> status_per_tx = 4;
+}
