@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package qubic.v1;
+
+option go_package = "github.com/qubic/go-qubic/v1/qubicpb";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "quottery.proto";
+
+message GetBetInfoRequest {
+  uint32 bet_id = 1;
+}
+
+message GetActiveBetsByCreatorRequest {
+  string creator_id = 1;
+}
+
+message GetBettorsByBetOptionRequest {
+  uint32 bet_id = 1;
+  uint32 bet_option = 2;
+}
+
+service QubicService {
+  rpc GetBasicInfo(google.protobuf.Empty) returns (BasicInfo) {
+    option (google.api.http) = {
+      get: "/v1/getBasicInfo"
+    };
+  };
+
+  rpc GetBetInfo(GetBetInfoRequest) returns (BetInfo) {
+    option (google.api.http) = {
+      get: "/v1/getBetInfo"
+    };
+  };
+
+  rpc GetActiveBets(google.protobuf.Empty) returns (ActiveBets){
+    option (google.api.http) = {
+      get: "/v1/getActiveBets"
+    };
+  };
+
+  rpc GetActiveBetsByCreator(GetActiveBetsByCreatorRequest) returns (ActiveBets){
+    option (google.api.http) = {
+      get: "/v1/getActiveBetsByCreator"
+    };
+  };
+
+  rpc GetBettorsByBetOption(GetBettorsByBetOptionRequest) returns (BetOptionBettors) {
+    option (google.api.http) = {
+      get: "/v1/getBettorsByBetOption"
+    };
+  };
+}

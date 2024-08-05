@@ -36,7 +36,7 @@ message BetInfo {
 }
 
 message ActiveBets {
-  repeated uint32 bet_ids = 1;
+  repeated uint32 active_bet_ids = 1;
 }
 
 message BasicInfo {

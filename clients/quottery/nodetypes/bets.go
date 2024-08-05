@@ -109,7 +109,7 @@ func (ab *ActiveBets) UnmarshallFromReader(r io.Reader) error {
 
 	err = binary.Read(r, binary.LittleEndian, ab)
 	if err != nil {
-		return errors.Wrap(err, "reading quottery active bets data")
+		return errors.Wrap(err, "reading quottery active bets count")
 	}
 
 	return nil
@@ -167,7 +167,7 @@ func (bod *BetOptionDetail) UnmarshallFromReader(r io.Reader) error {
 
 	err := binary.Read(r, binary.BigEndian, &header)
 	if err != nil {
-		return errors.Wrap(err, "reading quottery active bets header")
+		return errors.Wrap(err, "reading quottery bet option detail header")
 	}
 
 	if header.Type == connector.EndResponse {
@@ -180,7 +180,7 @@ func (bod *BetOptionDetail) UnmarshallFromReader(r io.Reader) error {
 
 	err = binary.Read(r, binary.LittleEndian, bod)
 	if err != nil {
-		return errors.Wrap(err, "reading quottery active bets data")
+		return errors.Wrap(err, "reading quottery bet option detail data")
 	}
 
 	return nil

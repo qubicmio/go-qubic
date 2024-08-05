@@ -120,12 +120,12 @@ type activeBetsConverter struct{}
 func (abc activeBetsConverter) ToProto(ab nodetypes.ActiveBets) *qubicpb.ActiveBets {
 	betIDs := make([]uint32, 0, ab.Count)
 
-	for _, b := range ab.BetIDs {
-		betIDs = append(betIDs, b)
+	for i := 0; i < int(ab.Count); i++ {
+		betIDs = append(betIDs, ab.BetIDs[i])
 	}
 
 	return &qubicpb.ActiveBets{
-		BetIds: betIDs,
+		ActiveBetIds: betIDs,
 	}
 }
 
