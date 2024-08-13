@@ -20,11 +20,6 @@ import (
 
 var _ qubicpb.QubicServiceServer = &Server{}
 
-type TransactionInfo struct {
-	timestamp uint64
-	moneyFlew bool
-}
-
 type Server struct {
 	qubicpb.UnimplementedQubicServiceServer
 	listenAddrGRPC string

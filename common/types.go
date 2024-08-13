@@ -125,6 +125,21 @@ func PubKeysToIdentities(pubKeys [][32]byte, isLowercase bool) ([]Identity, erro
 	return identities, nil
 }
 
+func PubKeysToIdentitiesString(pubKeys [][32]byte, isLowercase bool) ([]string, error) {
+	identities := make([]string, 0)
+	for _, identity := range pubKeys {
+		if identity == [32]byte{} {
+			continue
+		}
+		id, err := getIDFrom32Bytes(identity, isLowercase)
+		if err != nil {
+			return nil, errors.Wrapf(err, "getting identity from pubKey hex %s", hex.EncodeToString(identity[:]))
+		}
+		identities = append(identities, id.String())
+	}
+	return identities, nil
+}
+
 func PubKeyToIdentity(pubKey [32]byte) (Identity, error) {
 	return getIDFrom32Bytes(pubKey, false)
 }

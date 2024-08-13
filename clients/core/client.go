@@ -3,11 +3,11 @@ package core
 import (
 	"context"
 	"github.com/pkg/errors"
-	"github.com/qubic/go-qubic/clients/core/hrtypes"
 	"github.com/qubic/go-qubic/clients/core/nodetypes"
 	"github.com/qubic/go-qubic/clients/quottery"
 	"github.com/qubic/go-qubic/common"
 	"github.com/qubic/go-qubic/internal/connector"
+	qubicpb "github.com/qubic/go-qubic/proto/v1"
 )
 
 type Client struct {
@@ -24,70 +24,67 @@ func (c *Client) QuotteryClient() *quottery.Client {
 	return quottery.NewClient(c.connector)
 }
 
-func (c *Client) GetTickInfo(ctx context.Context) (hrtypes.TickInfo, error) {
+func (c *Client) GetTickInfo(ctx context.Context) (*qubicpb.TickInfo, error) {
 	var result nodetypes.TickInfo
 
 	err := c.connector.PerformCoreRequest(ctx, nodetypes.CurrentTickInfoTypeRequest, nil, &result)
 	if err != nil {
-		return hrtypes.TickInfo{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var ti hrtypes.TickInfo
-	err = ti.FromNodeType(result)
+	tickInfoPb, err := result.ToProto()
 	if err != nil {
-		return hrtypes.TickInfo{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting tickInfo to proto")
 	}
 
-	return ti, nil
+	return tickInfoPb, nil
 }
 
-func (c *Client) GetAddressInfo(ctx context.Context, id string) (hrtypes.AddressInfo, error) {
+func (c *Client) GetAddressInfo(ctx context.Context, id string) (*qubicpb.EntityInfo, error) {
 	identity := common.Identity(id)
 	pubKey, err := identity.ToPubKey(false)
 	if err != nil {
-		return hrtypes.AddressInfo{}, errors.Wrap(err, "converting identity to public key")
+		return nil, errors.Wrap(err, "converting identity to public key")
 	}
 
 	var result nodetypes.AddressInfo
 	err = c.connector.PerformCoreRequest(ctx, nodetypes.BalanceTypeRequest, pubKey, &result)
 	if err != nil {
-		return hrtypes.AddressInfo{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var ai hrtypes.AddressInfo
-	err = ai.FromNodeType(result)
+	ai, err := result.ToProto()
 	if err != nil {
-		return hrtypes.AddressInfo{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting address info to proto")
 	}
 
 	return ai, nil
 }
 
-func (c *Client) GetComputors(ctx context.Context) (hrtypes.ComputorList, error) {
+func (c *Client) GetComputors(ctx context.Context) (*qubicpb.Computors, error) {
 	var result nodetypes.Computors
 
 	err := c.connector.PerformCoreRequest(ctx, nodetypes.ComputorsTypeRequest, nil, &result)
 	if err != nil {
-		return hrtypes.ComputorList{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var cl hrtypes.ComputorList
-	err = cl.FromNodeType(result)
+	comps, err := result.ToProto()
 	if err != nil {
-		return hrtypes.ComputorList{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting computors to proto")
 	}
 
-	return cl, nil
+	return comps, nil
 }
 
-func (c *Client) GetTickQuorumVotes(ctx context.Context, tickNumber uint32) (hrtypes.TickQuorumVotes, error) {
+func (c *Client) GetTickQuorumVotes(ctx context.Context, tickNumber uint32) (*qubicpb.QuorumVote, error) {
 	tickInfo, err := c.GetTickInfo(ctx)
 	if err != nil {
-		return hrtypes.TickQuorumVotes{}, errors.Wrap(err, "getting tick info")
+		return nil, errors.Wrap(err, "getting tick info")
 	}
 
 	if tickInfo.Tick < tickNumber {
-		return hrtypes.TickQuorumVotes{}, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
+		return nil, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
 	}
 
 	request := struct {
@@ -99,26 +96,25 @@ func (c *Client) GetTickQuorumVotes(ctx context.Context, tickNumber uint32) (hrt
 
 	err = c.connector.PerformCoreRequest(ctx, nodetypes.QuorumTickTypeRequest, request, &result)
 	if err != nil {
-		return hrtypes.TickQuorumVotes{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var tqv hrtypes.TickQuorumVotes
-	err = tqv.FromNodeType(result)
+	tqv, err := result.ToProto()
 	if err != nil {
-		return hrtypes.TickQuorumVotes{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting tick quorum votes to proto")
 	}
 
 	return tqv, nil
 }
 
-func (c *Client) GetTickData(ctx context.Context, tickNumber uint32) (hrtypes.TickData, error) {
+func (c *Client) GetTickData(ctx context.Context, tickNumber uint32) (*qubicpb.TickData, error) {
 	tickInfo, err := c.GetTickInfo(ctx)
 	if err != nil {
-		return hrtypes.TickData{}, errors.Wrap(err, "getting tick info")
+		return nil, errors.Wrap(err, "getting tick info")
 	}
 
 	if tickInfo.Tick < tickNumber {
-		return hrtypes.TickData{}, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
+		return nil, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
 	}
 
 	request := struct{ Tick uint32 }{Tick: tickNumber}
@@ -126,27 +122,28 @@ func (c *Client) GetTickData(ctx context.Context, tickNumber uint32) (hrtypes.Ti
 	var result nodetypes.TickData
 	err = c.connector.PerformCoreRequest(ctx, nodetypes.TickDataTypeRequest, request, &result)
 	if err != nil {
-		return hrtypes.TickData{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var td hrtypes.TickData
-	err = td.FromNodeType(result)
+	td, err := result.ToProto()
 	if err != nil {
-		return hrtypes.TickData{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting tick data to proto")
 	}
 
 	return td, nil
 }
 
-func (c *Client) GetTickTransactions(ctx context.Context, tickNumber uint32) (hrtypes.Transactions, error) {
+func (c *Client) GetTickTransactions(ctx context.Context, tickNumber uint32) (*qubicpb.TickTransactions, error) {
 	tickData, err := c.GetTickData(ctx, tickNumber)
 	if err != nil {
-		return hrtypes.Transactions{}, errors.Wrap(err, "getting tick data")
+		return nil, errors.Wrap(err, "getting tick data")
 	}
 
-	nrTx := len(tickData.TransactionIDs)
+	nrTx := len(tickData.TransactionIds)
 	if nrTx == 0 {
-		return hrtypes.Transactions{}, nil
+		return &qubicpb.TickTransactions{
+			Transactions: []*qubicpb.Transaction{},
+		}, nil
 	}
 
 	requestTickTransactions := struct {
@@ -167,23 +164,22 @@ func (c *Client) GetTickTransactions(ctx context.Context, tickNumber uint32) (hr
 		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	txs := make(hrtypes.Transactions, len(result))
-	err = txs.FromNodeType(result)
+	txs, err := result.ToProto()
 	if err != nil {
-		return txs, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting tick transactions to proto")
 	}
 
 	return txs, nil
 }
 
-func (c *Client) GetTickTransactionsStatus(ctx context.Context, tickNumber uint32) (hrtypes.TransactionsStatus, error) {
+func (c *Client) GetTickTransactionsStatus(ctx context.Context, tickNumber uint32) (*qubicpb.TickTransactionsStatus, error) {
 	tickInfo, err := c.GetTickInfo(ctx)
 	if err != nil {
-		return hrtypes.TransactionsStatus{}, errors.Wrap(err, "getting tick info")
+		return nil, errors.Wrap(err, "getting tick info")
 	}
 
 	if tickInfo.Tick < tickNumber {
-		return hrtypes.TransactionsStatus{}, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
+		return nil, errors.Errorf("Requested tick %d is in the future. Latest tick is: %d", tickNumber, tickInfo.Tick)
 	}
 
 	request := struct {
@@ -195,14 +191,12 @@ func (c *Client) GetTickTransactionsStatus(ctx context.Context, tickNumber uint3
 	var result nodetypes.TransactionStatus
 	err = c.connector.PerformCoreRequest(ctx, nodetypes.TxStatusTypeRequest, request, &result)
 	if err != nil {
-		return hrtypes.TransactionsStatus{}, errors.Wrap(err, "handling chainRequest")
+		return nil, errors.Wrap(err, "handling chainRequest")
 	}
 
-	var txStatus hrtypes.TransactionsStatus
-
-	err = txStatus.FromNodeType(result)
+	txStatus, err := result.ToProto()
 	if err != nil {
-		return hrtypes.TransactionsStatus{}, errors.Wrap(err, "converting from raw model")
+		return nil, errors.Wrap(err, "converting tick transactions status to proto")
 	}
 
 	return txStatus, nil

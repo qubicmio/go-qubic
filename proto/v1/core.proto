@@ -26,6 +26,7 @@ message Computors {
   uint32 epoch = 1;
   repeated string identities = 2;
   string signature = 3;
+  string digest = 4;
 }
 
 message QuorumVote {
@@ -63,8 +64,8 @@ message TickData {
   uint32 epoch = 2;
   uint32 tick = 3;
   google.protobuf.Timestamp timestamp = 4;
-  bytes var_struct = 5;
-  bytes time_lock = 6;
+  string var_struct = 5;
+  string time_lock = 6;
   repeated string transaction_ids = 7;
   repeated int64 contract_fees = 8;
   string signature = 9;
@@ -90,6 +91,10 @@ message Transaction {
   string signature = 8;
   string tx_id = 9;
   string digest = 10;
+}
+
+message TickTransactions {
+  repeated Transaction transactions = 1;
 }
 
 message TickTransactionsStatus {

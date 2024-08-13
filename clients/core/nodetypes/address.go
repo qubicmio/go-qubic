@@ -2,8 +2,11 @@ package nodetypes
 
 import (
 	"encoding/binary"
+	"encoding/hex"
 	"github.com/pkg/errors"
+	"github.com/qubic/go-qubic/common"
 	"github.com/qubic/go-qubic/internal/connector"
+	qubicpb "github.com/qubic/go-qubic/proto/v1"
 	"io"
 )
 
@@ -51,4 +54,52 @@ func (ai *AddressInfo) UnmarshallFromReader(r io.Reader) error {
 	}
 
 	return nil
+}
+
+func (ai *AddressInfo) ToProto() (*qubicpb.EntityInfo, error) {
+	aic := addressInfoConverter{rawAddressInfo: *ai}
+	aiPb, err := aic.toProto()
+	if err != nil {
+		return nil, errors.Wrap(err, "calling address info converter to proto")
+	}
+
+	return aiPb, nil
+}
+
+type addressInfoConverter struct {
+	rawAddressInfo AddressInfo
+}
+
+func (aic addressInfoConverter) toProto() (*qubicpb.EntityInfo, error) {
+	id, err := common.PubKeyToIdentity(aic.rawAddressInfo.AddressData.PublicKey)
+	if err != nil {
+		return nil, errors.Wrapf(err, "getting address id from pubkey hex: %s", hex.EncodeToString(aic.rawAddressInfo.AddressData.PublicKey[:]))
+	}
+
+	siblings := make([]string, 0, SpectrumDepth)
+	for _, sibling := range aic.rawAddressInfo.Siblings {
+		if sibling == [32]byte{} {
+			continue
+		}
+		siblingID, err := common.PubKeyToIdentity(sibling)
+		if err != nil {
+			return nil, errors.Wrapf(err, "getting address id from sibling hex: %s", hex.EncodeToString(sibling[:]))
+		}
+		siblings = append(siblings, siblingID.String())
+	}
+
+	return &qubicpb.EntityInfo{
+		Entity: &qubicpb.EntityInfo_Entity{
+			Id:                         id.String(),
+			IncomingAmount:             aic.rawAddressInfo.AddressData.IncomingAmount,
+			OutgoingAmount:             aic.rawAddressInfo.AddressData.OutgoingAmount,
+			NumberOfIncomingTransfers:  aic.rawAddressInfo.AddressData.NumberOfIncomingTransfers,
+			NumberOfOutgoingTransfers:  aic.rawAddressInfo.AddressData.NumberOfOutgoingTransfers,
+			LatestIncomingTransferTick: aic.rawAddressInfo.AddressData.LatestIncomingTransferTick,
+			LatestOutgoingTransferTick: aic.rawAddressInfo.AddressData.LatestOutgoingTransferTick,
+		},
+		ValidForTick:  aic.rawAddressInfo.Tick,
+		SpectrumIndex: aic.rawAddressInfo.SpectrumIndex,
+		SiblingIds:    siblings,
+	}, nil
 }
