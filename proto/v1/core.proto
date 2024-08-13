@@ -103,3 +103,4 @@ message TickTransactionsStatus {
   uint32 tx_count = 3;
   map<string, bool> status_per_tx = 4;
 }
+

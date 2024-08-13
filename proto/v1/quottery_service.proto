@@ -21,7 +21,7 @@ message GetBettorsByBetOptionRequest {
   uint32 bet_option = 2;
 }
 
-service QubicService {
+service QuotteryService {
   rpc GetBasicInfo(google.protobuf.Empty) returns (BasicInfo) {
     option (google.api.http) = {
       get: "/v1/getBasicInfo"

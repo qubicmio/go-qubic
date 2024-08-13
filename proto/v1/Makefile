@@ -30,7 +30,7 @@ all: $(GO)
     --grpc-gateway_opt generate_unbound_methods=true $(OPT_ARGS) \
 	--go_out=paths=source_relative:. *.proto
 
-openapi: service.proto
+openapi: quottery_service.proto
 		protoc --openapiv2_out=logtostderr=true:. $(OPT_ARGS) \
 			   service.proto
 

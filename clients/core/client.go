@@ -77,7 +77,7 @@ func (c *Client) GetComputors(ctx context.Context) (*qubicpb.Computors, error) {
 	return comps, nil
 }
 
-func (c *Client) GetTickQuorumVotes(ctx context.Context, tickNumber uint32) (*qubicpb.QuorumVote, error) {
+func (c *Client) GetTickQuorumVote(ctx context.Context, tickNumber uint32) (*qubicpb.QuorumVote, error) {
 	tickInfo, err := c.GetTickInfo(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "getting tick info")
