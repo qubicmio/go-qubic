@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package qubic.v1;
+
+option go_package = "github.com/qubic/go-qubic/v1/qubicpb";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+message Fees {
+  uint32 asset_issuance_fee = 1;
+  uint32 transfer_fee = 2;
+  uint32 trade_fee = 3;
+}
+
+message AssetOrders {
+  message Order {
+    string entity_id = 1;
+    int64 price = 2;
+    int64 number_of_shares = 3;
+  }
+  repeated Order orders = 1;
+}
+
+message EntityOrders {
+  message Order {
+    string issuer_id = 1;
+    string asset_name = 2;
+    int64 price = 3;
+    int64 number_of_shares = 4;
+  }
+
+  repeated Order orders = 1;
+}
+
+message GetAssetOrdersRequest {
+  string asset_name = 1;
+  string issuer_id = 2;
+  uint64 offset = 3;
+}
+
+message GetEntityOrdersRequest {
+  string entity_id = 1;
+  uint64 offset = 2;
+}
+
+service QxService {
+  rpc GetFees(google.protobuf.Empty) returns (Fees) {
+    option (google.api.http) = {
+      get: "/v1/qx/getFees"
+    };
+  };
+  rpc GetAssetAskOrders(GetAssetOrdersRequest) returns (AssetOrders) {
+    option (google.api.http) = {
+      get: "/v1/qx/getAssetAskOrders"
+    };
+  };
+  rpc GetAssetBidOrders(GetAssetOrdersRequest) returns (AssetOrders) {
+    option (google.api.http) = {
+      get: "/v1/qx/getAssetBidOrders"
+    };
+  };
+  rpc GetEntityAskOrders(GetEntityOrdersRequest) returns (EntityOrders) {
+    option (google.api.http) = {
+      get: "/v1/qx/getEntityAskOrders"
+    };
+  };
+  rpc GetEntityBidOrders(GetEntityOrdersRequest) returns (EntityOrders) {
+    option (google.api.http) = {
+      get: "/v1/qx/getEntityBidOrders"
+    };
+  };
+}
+

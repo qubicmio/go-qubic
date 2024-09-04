@@ -31,47 +31,47 @@ message GetTickTransactionsStatusRequest {
 service CoreService {
   rpc GetTickInfo(google.protobuf.Empty) returns (TickInfo) {
     option (google.api.http) = {
-      get: "/v1/getTickInfo"
+      get: "/v1/core/getTickInfo"
     };
   }
 
   rpc GetEntityInfo(GetEntityInfoRequest) returns (EntityInfo) {
     option (google.api.http) = {
-      post: "/v1/getEntityInfo"
+      post: "/v1/core/getEntityInfo"
       body: "*"
     };
   };
 
   rpc GetComputors(google.protobuf.Empty) returns (Computors) {
     option (google.api.http) = {
-      get: "/v1/getComputors"
+      get: "/v1/core/getComputors"
     };
   };
 
   rpc GetTickQuorumVote(GetTickQuorumVoteRequest) returns (QuorumVote) {
     option (google.api.http) = {
-      post: "/v1/getTickQuorumVote"
+      post: "/v1/core/getTickQuorumVote"
       body: "*"
     };
   };
 
   rpc GetTickData(GetTickDataRequest) returns (TickData) {
     option (google.api.http) = {
-      post: "/v1/getTickData"
+      post: "/v1/core/getTickData"
       body: "*"
     };
   };
 
   rpc GetTickTransactions(GetTickTransactionsRequest) returns (TickTransactions) {
     option (google.api.http) = {
-      post: "/v1/getTickTransactions"
+      post: "/v1/core/getTickTransactions"
       body: "*"
     };
   };
 
   rpc GetTickTransactionsStatus(GetTickTransactionsStatusRequest) returns (TickTransactionsStatus) {
     option (google.api.http) = {
-      post: "/v1/getTickTransactionsStatus"
+      post: "/v1/core/getTickTransactionsStatus"
       body: "*"
     };
   };

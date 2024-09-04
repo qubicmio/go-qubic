@@ -112,6 +112,44 @@ func (ch *connHandler) handleSmartContractRequest(ctx context.Context, reqContra
 	return nil
 }
 
+func (ch *connHandler) handleSmartContractRequestV2(ctx context.Context, reqContractFunction RequestContractFunction, requestData interface{}, dest ReaderUnmarshaler) error {
+	conn := ch.getConn()
+
+	req := newSmartContractRequest(reqContractFunction, requestData)
+	serializedRequest, err := req.serialize()
+	if err != nil {
+		return errors.Wrapf(
+			err,
+			"serializing smart contract request for contract id: %d and input type: %d",
+			reqContractFunction.ContractIndex,
+			reqContractFunction.InputType,
+		)
+	}
+
+	err = ch.prw.writePacket(ctx, conn, serializedRequest)
+	if err != nil {
+		return errors.Wrapf(err, "sending smart contract packet to qubic conn for contract id: %d and input type: %d",
+			reqContractFunction.ContractIndex,
+			reqContractFunction.InputType,
+		)
+	}
+
+	// if dest is nil then we don't care about the response
+	if dest == nil {
+		return nil
+	}
+
+	err = ch.prw.readPacket(ctx, conn, dest)
+	if err != nil {
+		return errors.Wrapf(err, "reading smart contract response for contract id: %d and input type: %d",
+			reqContractFunction.ContractIndex,
+			reqContractFunction.InputType,
+		)
+	}
+
+	return nil
+}
+
 // this performs initial handshake with node which will return the list of known peers
 func (ch *connHandler) handleInitialRequestAndSetPeers(ctx context.Context) error {
 	var result PublicPeers

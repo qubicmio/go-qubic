@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/binary"
 	"github.com/pkg/errors"
+	"io"
 	"math/rand"
 )
 
 const EndResponse = 35
 const contractFunctionRequest = 42
+const ContractFunctionResponse = 43
 const broadcastTransactionRequestType = 24
 
 type RequestResponseHeader struct {
@@ -46,6 +48,15 @@ func (h *RequestResponseHeader) RandomizeDejaVu() {
 	if h.DejaVu == 0 {
 		h.DejaVu = 1
 	}
+}
+
+func (h *RequestResponseHeader) UnmarshallFromReader(r io.Reader) error {
+	err := binary.Read(r, binary.BigEndian, h)
+	if err != nil {
+		return errors.Wrap(err, "reading quottery basic info header")
+	}
+
+	return nil
 }
 
 type chainRequest struct {

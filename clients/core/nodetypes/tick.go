@@ -34,7 +34,6 @@ type TickData struct {
 	Day                uint8
 	Month              uint8
 	Year               uint8
-	UnionData          [256]byte
 	Timelock           [32]byte
 	TransactionDigests [NumberOfTransactionsPerTick][32]byte
 	ContractFees       [1024]int64
@@ -105,7 +104,6 @@ func (tdc *tickDataConverter) toProto() (*qubicpb.TickData, error) {
 		Epoch:          uint32(tdc.rawTd.Epoch),
 		Tick:           tdc.rawTd.Tick,
 		Timestamp:      timestamppb.New(date),
-		VarStruct:      base64.StdEncoding.EncodeToString(tdc.rawTd.UnionData[:]),
 		TimeLock:       base64.StdEncoding.EncodeToString(tdc.rawTd.Timelock[:]),
 		TransactionIds: transactionIds,
 		ContractFees:   contractFeesToProto(tdc.rawTd.ContractFees),

@@ -24,7 +24,7 @@ func TestTransaction_MarshallUnmarshall(t *testing.T) {
 	}
 
 	var unmarshalledTx Transaction
-	err = unmarshalledTx.UnmarshallBinary(bytes.NewReader(marshalled))
+	err = unmarshalledTx.UnmarshallFromReader(bytes.NewReader(marshalled))
 	if err != nil {
 		t.Fatalf("Got err when unmarshalling tx. err: %s", err.Error())
 	}

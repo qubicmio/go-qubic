@@ -3,7 +3,6 @@ package quottery
 import (
 	"context"
 	"github.com/pkg/errors"
-	"github.com/qubic/go-qubic/clients/quottery/nodetypes"
 	"github.com/qubic/go-qubic/common"
 	"github.com/qubic/go-qubic/internal/connector"
 	qubicpb "github.com/qubic/go-qubic/proto/v1"
@@ -21,12 +20,12 @@ func NewClient(connector *connector.Connector) *Client {
 
 func (c *Client) GetBasicInfo(ctx context.Context) (*qubicpb.BasicInfo, error) {
 	rcf := connector.RequestContractFunction{
-		ContractIndex: nodetypes.QuotteryContractID,
-		InputType:     nodetypes.ViewID.BasicInfo,
+		ContractIndex: contractID,
+		InputType:     ViewID.BasicInfo,
 		InputSize:     0,
 	}
 
-	var result nodetypes.BasicInfo
+	var result BasicInfo
 	err := c.connector.PerformSmartContractRequest(ctx, rcf, nil, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")
@@ -42,8 +41,8 @@ func (c *Client) GetBasicInfo(ctx context.Context) (*qubicpb.BasicInfo, error) {
 
 func (c *Client) GetBetInfo(ctx context.Context, betID uint32) (*qubicpb.BetInfo, error) {
 	rcf := connector.RequestContractFunction{
-		ContractIndex: nodetypes.QuotteryContractID,
-		InputType:     nodetypes.ViewID.BetInfo,
+		ContractIndex: contractID,
+		InputType:     ViewID.BetInfo,
 		InputSize:     4, // sizeof betID; uint32
 	}
 
@@ -53,7 +52,7 @@ func (c *Client) GetBetInfo(ctx context.Context, betID uint32) (*qubicpb.BetInfo
 		BetID: betID,
 	}
 
-	var result nodetypes.BetInfo
+	var result BetInfo
 	err := c.connector.PerformSmartContractRequest(ctx, rcf, request, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")
@@ -69,12 +68,12 @@ func (c *Client) GetBetInfo(ctx context.Context, betID uint32) (*qubicpb.BetInfo
 
 func (c *Client) GetActiveBets(ctx context.Context) (*qubicpb.ActiveBets, error) {
 	rcf := connector.RequestContractFunction{
-		ContractIndex: nodetypes.QuotteryContractID,
-		InputType:     nodetypes.ViewID.ActiveBet,
+		ContractIndex: contractID,
+		InputType:     ViewID.ActiveBet,
 		InputSize:     0,
 	}
 
-	var result nodetypes.ActiveBets
+	var result ActiveBets
 	err := c.connector.PerformSmartContractRequest(ctx, rcf, nil, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")
@@ -87,8 +86,8 @@ func (c *Client) GetActiveBets(ctx context.Context) (*qubicpb.ActiveBets, error)
 
 func (c *Client) GetActiveBetsByCreator(ctx context.Context, creatorID common.Identity) (*qubicpb.ActiveBets, error) {
 	rcf := connector.RequestContractFunction{
-		ContractIndex: nodetypes.QuotteryContractID,
-		InputType:     nodetypes.ViewID.ActiveBetByCreator,
+		ContractIndex: contractID,
+		InputType:     ViewID.ActiveBetByCreator,
 		InputSize:     32,
 	}
 
@@ -103,7 +102,7 @@ func (c *Client) GetActiveBetsByCreator(ctx context.Context, creatorID common.Id
 		CreatorPubKey: creatorPubKey,
 	}
 
-	var result nodetypes.ActiveBets
+	var result ActiveBets
 	err = c.connector.PerformSmartContractRequest(ctx, rcf, request, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")
@@ -116,8 +115,8 @@ func (c *Client) GetActiveBetsByCreator(ctx context.Context, creatorID common.Id
 
 func (c *Client) GetBettorsByBetOption(ctx context.Context, betID, betOption uint32) (*qubicpb.BetOptionBettors, error) {
 	rcf := connector.RequestContractFunction{
-		ContractIndex: nodetypes.QuotteryContractID,
-		InputType:     nodetypes.ViewID.BetDetail,
+		ContractIndex: contractID,
+		InputType:     ViewID.BetDetail,
 		InputSize:     8, // sizeof betID + betOptions; 2 * uint32
 	}
 
@@ -129,7 +128,7 @@ func (c *Client) GetBettorsByBetOption(ctx context.Context, betID, betOption uin
 		BetOption: betOption,
 	}
 
-	var result nodetypes.BetOptionDetail
+	var result BetOptionDetail
 	err := c.connector.PerformSmartContractRequest(ctx, rcf, request, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")

@@ -252,7 +252,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickInfo", runtime.WithHTTPPathPattern("/v1/getTickInfo"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickInfo", runtime.WithHTTPPathPattern("/v1/core/getTickInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -277,7 +277,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetEntityInfo", runtime.WithHTTPPathPattern("/v1/getEntityInfo"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetEntityInfo", runtime.WithHTTPPathPattern("/v1/core/getEntityInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -302,7 +302,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetComputors", runtime.WithHTTPPathPattern("/v1/getComputors"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetComputors", runtime.WithHTTPPathPattern("/v1/core/getComputors"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -327,7 +327,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickQuorumVote", runtime.WithHTTPPathPattern("/v1/getTickQuorumVote"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickQuorumVote", runtime.WithHTTPPathPattern("/v1/core/getTickQuorumVote"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -352,7 +352,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickData", runtime.WithHTTPPathPattern("/v1/getTickData"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickData", runtime.WithHTTPPathPattern("/v1/core/getTickData"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -377,7 +377,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactions", runtime.WithHTTPPathPattern("/v1/getTickTransactions"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactions", runtime.WithHTTPPathPattern("/v1/core/getTickTransactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -402,7 +402,7 @@ func RegisterCoreServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactionsStatus", runtime.WithHTTPPathPattern("/v1/getTickTransactionsStatus"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactionsStatus", runtime.WithHTTPPathPattern("/v1/core/getTickTransactionsStatus"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -466,7 +466,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickInfo", runtime.WithHTTPPathPattern("/v1/getTickInfo"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickInfo", runtime.WithHTTPPathPattern("/v1/core/getTickInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -488,7 +488,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetEntityInfo", runtime.WithHTTPPathPattern("/v1/getEntityInfo"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetEntityInfo", runtime.WithHTTPPathPattern("/v1/core/getEntityInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -510,7 +510,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetComputors", runtime.WithHTTPPathPattern("/v1/getComputors"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetComputors", runtime.WithHTTPPathPattern("/v1/core/getComputors"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -532,7 +532,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickQuorumVote", runtime.WithHTTPPathPattern("/v1/getTickQuorumVote"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickQuorumVote", runtime.WithHTTPPathPattern("/v1/core/getTickQuorumVote"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -554,7 +554,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickData", runtime.WithHTTPPathPattern("/v1/getTickData"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickData", runtime.WithHTTPPathPattern("/v1/core/getTickData"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -576,7 +576,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactions", runtime.WithHTTPPathPattern("/v1/getTickTransactions"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactions", runtime.WithHTTPPathPattern("/v1/core/getTickTransactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -598,7 +598,7 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactionsStatus", runtime.WithHTTPPathPattern("/v1/getTickTransactionsStatus"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/qubic.v1.CoreService/GetTickTransactionsStatus", runtime.WithHTTPPathPattern("/v1/core/getTickTransactionsStatus"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -618,19 +618,19 @@ func RegisterCoreServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_CoreService_GetTickInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getTickInfo"}, ""))
+	pattern_CoreService_GetTickInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getTickInfo"}, ""))
 
-	pattern_CoreService_GetEntityInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getEntityInfo"}, ""))
+	pattern_CoreService_GetEntityInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getEntityInfo"}, ""))
 
-	pattern_CoreService_GetComputors_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getComputors"}, ""))
+	pattern_CoreService_GetComputors_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getComputors"}, ""))
 
-	pattern_CoreService_GetTickQuorumVote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getTickQuorumVote"}, ""))
+	pattern_CoreService_GetTickQuorumVote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getTickQuorumVote"}, ""))
 
-	pattern_CoreService_GetTickData_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getTickData"}, ""))
+	pattern_CoreService_GetTickData_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getTickData"}, ""))
 
-	pattern_CoreService_GetTickTransactions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getTickTransactions"}, ""))
+	pattern_CoreService_GetTickTransactions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getTickTransactions"}, ""))
 
-	pattern_CoreService_GetTickTransactionsStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "getTickTransactionsStatus"}, ""))
+	pattern_CoreService_GetTickTransactionsStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "core", "getTickTransactionsStatus"}, ""))
 )
 
 var (

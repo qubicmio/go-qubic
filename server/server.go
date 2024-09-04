@@ -5,6 +5,9 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/pkg/errors"
 	"github.com/qubic/go-qubic/clients/core"
+	"github.com/qubic/go-qubic/clients/quottery"
+	"github.com/qubic/go-qubic/clients/qx"
+	"github.com/qubic/go-qubic/internal/connector"
 	qubicpb "github.com/qubic/go-qubic/proto/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,8 +23,8 @@ type Server struct {
 	grpcServer     *grpc.Server
 }
 
-func NewServer(listenAddrGRPC, listenAddrHTTP string, coreClient *core.Client) *Server {
-	grpcServer := createGrpcServerAndRegisterServices(coreClient)
+func NewServer(listenAddrGRPC, listenAddrHTTP string, connector *connector.Connector) *Server {
+	grpcServer := createGrpcServerAndRegisterServices(connector)
 	server := Server{
 		listenAddrGRPC: listenAddrGRPC,
 		listenAddrHTTP: listenAddrHTTP,
@@ -31,17 +34,20 @@ func NewServer(listenAddrGRPC, listenAddrHTTP string, coreClient *core.Client) *
 	return &server
 }
 
-func createGrpcServerAndRegisterServices(coreClient *core.Client) *grpc.Server {
+func createGrpcServerAndRegisterServices(connector *connector.Connector) *grpc.Server {
 	srv := grpc.NewServer(
 		grpc.MaxRecvMsgSize(600*1024*1024),
 		grpc.MaxSendMsgSize(600*1024*1024),
 	)
 
-	quotteryService := NewQuotteryService(coreClient)
+	coreService := NewCoreService(core.NewClient(connector))
+	qubicpb.RegisterCoreServiceServer(srv, coreService)
+
+	quotteryService := NewQuotteryService(quottery.NewClient(connector))
 	qubicpb.RegisterQuotteryServiceServer(srv, quotteryService)
 
-	coreService := NewCoreService(coreClient)
-	qubicpb.RegisterCoreServiceServer(srv, coreService)
+	qxService := NewQxService(qx.NewClient(connector))
+	qubicpb.RegisterQxServiceServer(srv, qxService)
 
 	reflection.Register(srv)
 
@@ -73,6 +79,15 @@ func (s *Server) Start() error {
 				),
 			}
 
+			if err := qubicpb.RegisterCoreServiceHandlerFromEndpoint(
+				context.Background(),
+				mux,
+				s.listenAddrGRPC,
+				opts,
+			); err != nil {
+				panic(err)
+			}
+
 			if err := qubicpb.RegisterQuotteryServiceHandlerFromEndpoint(
 				context.Background(),
 				mux,
@@ -82,7 +97,7 @@ func (s *Server) Start() error {
 				panic(err)
 			}
 
-			if err := qubicpb.RegisterCoreServiceHandlerFromEndpoint(
+			if err := qubicpb.RegisterQxServiceHandlerFromEndpoint(
 				context.Background(),
 				mux,
 				s.listenAddrGRPC,

@@ -3,6 +3,7 @@ module github.com/qubic/go-qubic
 go 1.22
 
 require (
+	github.com/ardanlabs/conf v1.5.0
 	github.com/cloudflare/circl v1.3.8
 	github.com/cloudflare/fourq v0.0.0-20170427000316-8ada258cf9c8
 	github.com/google/go-cmp v0.6.0

@@ -89,7 +89,7 @@ func (tx *Transaction) MarshallBinary() ([]byte, error) {
 	return buff.Bytes(), nil
 }
 
-func (tx *Transaction) UnmarshallBinary(r io.Reader) error {
+func (tx *Transaction) UnmarshallFromReader(r io.Reader) error {
 	err := binary.Read(r, binary.LittleEndian, &tx.SourcePublicKey)
 	if err != nil {
 		return errors.Wrap(err, "reading source public key from reader")
@@ -226,7 +226,7 @@ func (txs *Transactions) UnmarshallFromReader(r io.Reader) error {
 
 		var tx Transaction
 
-		err = tx.UnmarshallBinary(r)
+		err = tx.UnmarshallFromReader(r)
 		if err != nil {
 			return errors.Wrap(err, "unmarshalling transaction")
 		}

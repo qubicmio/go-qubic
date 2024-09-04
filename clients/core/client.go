@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/qubic/go-qubic/clients/core/nodetypes"
-	"github.com/qubic/go-qubic/clients/quottery"
 	"github.com/qubic/go-qubic/common"
 	"github.com/qubic/go-qubic/internal/connector"
 	qubicpb "github.com/qubic/go-qubic/proto/v1"
@@ -18,10 +17,6 @@ func NewClient(connector *connector.Connector) *Client {
 	return &Client{
 		connector: connector,
 	}
-}
-
-func (c *Client) QuotteryClient() *quottery.Client {
-	return quottery.NewClient(c.connector)
 }
 
 func (c *Client) GetTickInfo(ctx context.Context) (*qubicpb.TickInfo, error) {

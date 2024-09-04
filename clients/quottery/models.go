@@ -1,4 +1,4 @@
-package nodetypes
+package quottery
 
 import (
 	"encoding/binary"
@@ -7,11 +7,7 @@ import (
 	"io"
 )
 
-const QuotteryContractID = 2
-
-const (
-	ContractFunctionTypeResponse = 43
-)
+const contractID = 2
 
 type viewID struct {
 	BasicInfo          uint16
@@ -74,8 +70,8 @@ func (bi *BetInfo) UnmarshallFromReader(r io.Reader) error {
 		return nil
 	}
 
-	if header.Type != ContractFunctionTypeResponse {
-		return errors.Errorf("Invalid header type, expected %d, found %d", ContractFunctionTypeResponse, header.Type)
+	if header.Type != connector.ContractFunctionResponse {
+		return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
 	}
 
 	err = binary.Read(r, binary.LittleEndian, bi)
@@ -103,8 +99,8 @@ func (ab *ActiveBets) UnmarshallFromReader(r io.Reader) error {
 		return nil
 	}
 
-	if header.Type != ContractFunctionTypeResponse {
-		return errors.Errorf("Invalid header type, expected %d, found %d", ContractFunctionTypeResponse, header.Type)
+	if header.Type != connector.ContractFunctionResponse {
+		return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
 	}
 
 	err = binary.Read(r, binary.LittleEndian, ab)
@@ -146,8 +142,8 @@ func (bi *BasicInfo) UnmarshallFromReader(r io.Reader) error {
 		return nil
 	}
 
-	if header.Type != ContractFunctionTypeResponse {
-		return errors.Errorf("Invalid header type, expected %d, found %d", ContractFunctionTypeResponse, header.Type)
+	if header.Type != connector.ContractFunctionResponse {
+		return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
 	}
 
 	err = binary.Read(r, binary.LittleEndian, bi)
@@ -174,8 +170,8 @@ func (bod *BetOptionDetail) UnmarshallFromReader(r io.Reader) error {
 		return nil
 	}
 
-	if header.Type != ContractFunctionTypeResponse {
-		return errors.Errorf("Invalid header type, expected %d, found %d", ContractFunctionTypeResponse, header.Type)
+	if header.Type != connector.ContractFunctionResponse {
+		return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
 	}
 
 	err = binary.Read(r, binary.LittleEndian, bod)

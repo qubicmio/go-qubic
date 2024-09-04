@@ -24,25 +24,25 @@ message GetBettorsByBetOptionRequest {
 service QuotteryService {
   rpc GetBasicInfo(google.protobuf.Empty) returns (BasicInfo) {
     option (google.api.http) = {
-      get: "/v1/getBasicInfo"
+      get: "/v1/quottery/getBasicInfo"
     };
   };
 
   rpc GetBetInfo(GetBetInfoRequest) returns (BetInfo) {
     option (google.api.http) = {
-      get: "/v1/getBetInfo"
+      get: "/v1/quottery/getBetInfo"
     };
   };
 
   rpc GetActiveBets(google.protobuf.Empty) returns (ActiveBets){
     option (google.api.http) = {
-      get: "/v1/getActiveBets"
+      get: "/v1/quottery/getActiveBets"
     };
   };
 
   rpc GetActiveBetsByCreator(GetActiveBetsByCreatorRequest) returns (ActiveBets){
     option (google.api.http) = {
-      get: "/v1/getActiveBetsByCreator"
+      get: "/v1/quottery/getActiveBetsByCreator"
     };
   };
 

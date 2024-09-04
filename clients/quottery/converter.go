@@ -2,7 +2,6 @@ package quottery
 
 import (
 	"github.com/pkg/errors"
-	"github.com/qubic/go-qubic/clients/quottery/nodetypes"
 	"github.com/qubic/go-qubic/common"
 	qubicpb "github.com/qubic/go-qubic/proto/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -13,7 +12,7 @@ var BetInfoConverter betInfoConverter
 
 type betInfoConverter struct{}
 
-func (bic betInfoConverter) ToProto(bi nodetypes.BetInfo) (*qubicpb.BetInfo, error) {
+func (bic betInfoConverter) ToProto(bi BetInfo) (*qubicpb.BetInfo, error) {
 	var creatorID common.Identity
 	err := creatorID.FromPubKey(bi.Creator, false)
 	if err != nil {
@@ -117,7 +116,7 @@ var ActiveBetsConverter activeBetsConverter
 
 type activeBetsConverter struct{}
 
-func (abc activeBetsConverter) ToProto(ab nodetypes.ActiveBets) *qubicpb.ActiveBets {
+func (abc activeBetsConverter) ToProto(ab ActiveBets) *qubicpb.ActiveBets {
 	betIDs := make([]uint32, 0, ab.Count)
 
 	for i := 0; i < int(ab.Count); i++ {
@@ -133,7 +132,7 @@ var BasicInfoConverter basicInfoConverter
 
 type basicInfoConverter struct{}
 
-func (bic basicInfoConverter) ToProto(bi nodetypes.BasicInfo) (*qubicpb.BasicInfo, error) {
+func (bic basicInfoConverter) ToProto(bi BasicInfo) (*qubicpb.BasicInfo, error) {
 	gameOperatorID, err := common.PubKeyToIdentity(bi.GameOperatorPubKey)
 	if err != nil {
 		return nil, errors.Wrapf(err, "converting game operator id with pubkey: %s", bi.GameOperatorPubKey)
@@ -169,7 +168,7 @@ var BetOptionBettorsConverter betOptionBettorsConverter
 
 type betOptionBettorsConverter struct{}
 
-func (bobc betOptionBettorsConverter) ToProto(bod nodetypes.BetOptionDetail) (*qubicpb.BetOptionBettors, error) {
+func (bobc betOptionBettorsConverter) ToProto(bod BetOptionDetail) (*qubicpb.BetOptionBettors, error) {
 	bettorIDs := make([]string, 0)
 
 	// declare once to avoid unnecessary memory allocation
