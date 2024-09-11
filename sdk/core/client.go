@@ -3,10 +3,10 @@ package core
 import (
 	"context"
 	"github.com/pkg/errors"
-	"github.com/qubic/go-qubic/clients/core/nodetypes"
 	"github.com/qubic/go-qubic/common"
 	"github.com/qubic/go-qubic/internal/connector"
 	qubicpb "github.com/qubic/go-qubic/proto/v1"
+	"github.com/qubic/go-qubic/sdk/core/nodetypes"
 )
 
 type Client struct {

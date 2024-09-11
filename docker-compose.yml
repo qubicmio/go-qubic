@@ -1,7 +1,7 @@
 services:
   # Archiver node services
   qubic-node-proxy:
-    image: ghcr.io/qubic/go-qubic:v0.1.2
+    image: local.go-qubic
     container_name: qubic-node-proxy
     labels:
       # Traefik

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/pkg/errors"
 	"github.com/qubic/go-qubic/internal/connector"
 	"github.com/qubic/go-qubic/server"
@@ -53,14 +52,14 @@ func run() error {
 			if err != nil {
 				return errors.Wrap(err, "generating config usage")
 			}
-			fmt.Println(usage)
+			log.Println(usage)
 			return nil
 		case errors.Is(err, conf.ErrVersionWanted):
 			version, err := conf.VersionString(prefix, &cfg)
 			if err != nil {
 				return errors.Wrap(err, "generating config version")
 			}
-			fmt.Println(version)
+			log.Println(version)
 			return nil
 		}
 		return errors.Wrap(err, "parsing config")

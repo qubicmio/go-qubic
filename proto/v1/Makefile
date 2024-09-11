@@ -30,9 +30,11 @@ all: $(GO)
     --grpc-gateway_opt generate_unbound_methods=true $(OPT_ARGS) \
 	--go_out=paths=source_relative:. *.proto
 
-openapi: quottery_service.proto
-		protoc --openapiv2_out=logtostderr=true:. $(OPT_ARGS) \
-			   service.proto
+openapi:
+		protoc -I=. --openapiv2_out . \
+				--openapiv2_opt allow_merge=true,merge_file_name=qubic-integration-rpc $(OPT_ARGS) \
+			   *.proto
+		jq '. += {"host":"api.qubic.org", "schemes": ["http", "https"]}' qubic-integration-rpc.swagger.json > tmp && mv tmp qubic-integration-rpc.swagger.json
 
 clean:
 		rm -f *.pb.go

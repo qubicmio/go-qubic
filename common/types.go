@@ -171,3 +171,8 @@ func getIDFrom32Bytes(data [32]byte, isLowercase bool) (Identity, error) {
 
 	return id, nil
 }
+
+type QubicTransfer struct {
+	DestinationID Identity
+	Amount        int64
+}

@@ -1,0 +1,1223 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "core.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CoreService"
+    },
+    {
+      "name": "QuotteryService"
+    },
+    {
+      "name": "QxService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/core/getComputors": {
+      "get": {
+        "operationId": "CoreService_GetComputors",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Computors"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getEntityInfo": {
+      "post": {
+        "operationId": "CoreService_GetEntityInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1EntityInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetEntityInfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getTickData": {
+      "post": {
+        "operationId": "CoreService_GetTickData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TickData"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetTickDataRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getTickInfo": {
+      "get": {
+        "operationId": "CoreService_GetTickInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TickInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getTickQuorumVote": {
+      "post": {
+        "operationId": "CoreService_GetTickQuorumVote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QuorumVote"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetTickQuorumVoteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getTickTransactions": {
+      "post": {
+        "operationId": "CoreService_GetTickTransactions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TickTransactions"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetTickTransactionsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/core/getTickTransactionsStatus": {
+      "post": {
+        "operationId": "CoreService_GetTickTransactionsStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TickTransactionsStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetTickTransactionsStatusRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CoreService"
+        ]
+      }
+    },
+    "/v1/getBettorsByBetOption": {
+      "get": {
+        "operationId": "QuotteryService_GetBettorsByBetOption",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BetOptionBettors"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "betId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "betOption",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/quottery/getActiveBets": {
+      "get": {
+        "operationId": "QuotteryService_GetActiveBets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ActiveBets"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/quottery/getActiveBetsByCreator": {
+      "get": {
+        "operationId": "QuotteryService_GetActiveBetsByCreator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ActiveBets"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "creatorId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/quottery/getBasicInfo": {
+      "get": {
+        "operationId": "QuotteryService_GetBasicInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BasicInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/quottery/getBetInfo": {
+      "get": {
+        "operationId": "QuotteryService_GetBetInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BetInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "betId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/qx/getAssetAskOrders": {
+      "get": {
+        "operationId": "QxService_GetAssetAskOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetOrders"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assetName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "issuerId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "QxService"
+        ]
+      }
+    },
+    "/v1/qx/getAssetBidOrders": {
+      "get": {
+        "operationId": "QxService_GetAssetBidOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetOrders"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assetName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "issuerId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "QxService"
+        ]
+      }
+    },
+    "/v1/qx/getEntityAskOrders": {
+      "get": {
+        "operationId": "QxService_GetEntityAskOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1EntityOrders"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entityId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "QxService"
+        ]
+      }
+    },
+    "/v1/qx/getEntityBidOrders": {
+      "get": {
+        "operationId": "QxService_GetEntityBidOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1EntityOrders"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entityId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "QxService"
+        ]
+      }
+    },
+    "/v1/qx/getFees": {
+      "get": {
+        "operationId": "QxService_GetFees",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/qubicv1Fees"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "QxService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "BasicInfoEconomicsData": {
+      "type": "object",
+      "properties": {
+        "earnedAmountShareholder": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "paidAmountShareholder": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "earnedAmountBetWinner": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "distributedAmount": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "burnedAmount": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "BasicInfoMoneyFlowData": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "issueBet": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "joinBet": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "finalizeBet": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "BetInfoOption": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "BetInfoOracle": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "feePercentage": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "BetInfoVote": {
+      "type": "object",
+      "properties": {
+        "oracleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "wonOption": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "EntityInfoEntity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "incomingAmount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outgoingAmount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "numberOfIncomingTransfers": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numberOfOutgoingTransfers": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "latestIncomingTransferTick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "latestOutgoingTransferTick": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "QuorumVoteGroupedSharedVotes": {
+      "type": "object",
+      "properties": {
+        "vote": {
+          "$ref": "#/definitions/QuorumVoteSharedVote"
+        },
+        "numberOfVotes": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "QuorumVoteSaltedVote": {
+      "type": "object",
+      "properties": {
+        "resourceTestingDigest": {
+          "type": "string"
+        },
+        "spectrumDigest": {
+          "type": "string"
+        },
+        "universeDigest": {
+          "type": "string"
+        },
+        "computerDigest": {
+          "type": "string"
+        },
+        "expectedNextTickTxDigest": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        }
+      }
+    },
+    "QuorumVoteSharedVote": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "prevResourceTestingDigest": {
+          "type": "string"
+        },
+        "prevSpectrumDigest": {
+          "type": "string"
+        },
+        "prevUniverseDigest": {
+          "type": "string"
+        },
+        "prevComputerDigest": {
+          "type": "string"
+        },
+        "txDigest": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "qubicv1Fees": {
+      "type": "object",
+      "properties": {
+        "assetIssuanceFee": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "transferFee": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tradeFee": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ActiveBets": {
+      "type": "object",
+      "properties": {
+        "activeBetIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "v1AssetOrders": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AssetOrdersOrder"
+          }
+        }
+      }
+    },
+    "v1AssetOrdersOrder": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64"
+        },
+        "numberOfShares": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1BasicInfo": {
+      "type": "object",
+      "properties": {
+        "fees": {
+          "$ref": "#/definitions/v1BasicInfoFees"
+        },
+        "minimumBetSlotAmount": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "issuedBets": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "moneyFlowData": {
+          "$ref": "#/definitions/BasicInfoMoneyFlowData"
+        },
+        "economicsData": {
+          "$ref": "#/definitions/BasicInfoEconomicsData"
+        },
+        "gameOperatorId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1BasicInfoFees": {
+      "type": "object",
+      "properties": {
+        "slotPerDay": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "gameOperator": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "shareholder": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "burn": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "v1BetInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "creatorId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/BetInfoOption"
+          }
+        },
+        "oracles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/BetInfoOracle"
+          }
+        },
+        "votes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/BetInfoVote"
+          }
+        },
+        "minimumBetAmount": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "maximumBetSlotPerOption": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "openTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "closeTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "v1BetOptionBettors": {
+      "type": "object",
+      "properties": {
+        "bettorIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1Computors": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "identities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "signature": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        }
+      }
+    },
+    "v1EntityInfo": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/EntityInfoEntity"
+        },
+        "validForTick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "spectrumIndex": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "siblingIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1EntityOrders": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1EntityOrdersOrder"
+          }
+        }
+      }
+    },
+    "v1EntityOrdersOrder": {
+      "type": "object",
+      "properties": {
+        "issuerId": {
+          "type": "string"
+        },
+        "assetName": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64"
+        },
+        "numberOfShares": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetEntityInfoRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetTickDataRequest": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetTickQuorumVoteRequest": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetTickTransactionsRequest": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetTickTransactionsStatusRequest": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1QuorumVote": {
+      "type": "object",
+      "properties": {
+        "sharedVotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/QuorumVoteGroupedSharedVotes"
+          }
+        },
+        "saltedVotesPerComputorIndex": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/QuorumVoteSaltedVote"
+          }
+        }
+      }
+    },
+    "v1TickData": {
+      "type": "object",
+      "properties": {
+        "computorIndex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "epoch": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "varStruct": {
+          "type": "string"
+        },
+        "timeLock": {
+          "type": "string"
+        },
+        "transactionIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contractFees": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "signature": {
+          "type": "string"
+        }
+      }
+    },
+    "v1TickInfo": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "durationInSeconds": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "epoch": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numberOfAlignedVotes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numberOfMisalignedVotes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "initialTickOfEpoch": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1TickTransactions": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Transaction"
+          }
+        }
+      }
+    },
+    "v1TickTransactionsStatus": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "currentTickOfNode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "txCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "statusPerTx": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "v1Transaction": {
+      "type": "object",
+      "properties": {
+        "sourceId": {
+          "type": "string"
+        },
+        "destId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tick": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "inputType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "inputSize": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "input": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "txId": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "host": "api.qubic.org",
+  "schemes": [
+    "https"
+  ]
+}
