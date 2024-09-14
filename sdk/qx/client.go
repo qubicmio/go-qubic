@@ -59,10 +59,14 @@ func (c *Client) GetAssetBidOrders(ctx context.Context, name string, issuerID st
 }
 
 func (c *Client) getAssetOrders(ctx context.Context, assetOrderType uint16, name string, issuerID string, offset uint64) (*qubicpb.AssetOrders, error) {
-	id := common.Identity(issuerID)
-	issuerPubKey, err := id.ToPubKey(false)
-	if err != nil {
-		return nil, errors.Wrap(err, "converting issuer id to pubkey")
+	var idPubkey [32]byte
+	if issuerID != "" {
+		id := common.Identity(issuerID)
+		issuerPubKey, err := id.ToPubKey(false)
+		if err != nil {
+			return nil, errors.Wrap(err, "converting issuer id to pubkey")
+		}
+		idPubkey = issuerPubKey
 	}
 
 	var assetName [8]byte
@@ -73,7 +77,7 @@ func (c *Client) getAssetOrders(ctx context.Context, assetOrderType uint16, name
 		AssetName    uint64
 		Offset       uint64
 	}{
-		IssuerPubKey: issuerPubKey,
+		IssuerPubKey: idPubkey,
 		AssetName:    binary.LittleEndian.Uint64(assetName[:]),
 		Offset:       offset,
 	}
@@ -87,7 +91,7 @@ func (c *Client) getAssetOrders(ctx context.Context, assetOrderType uint16, name
 	}
 
 	var result AssetOrders
-	err = c.connector.PerformSmartContractRequest(ctx, rcf, request, &result)
+	err := c.connector.PerformSmartContractRequest(ctx, rcf, request, &result)
 	if err != nil {
 		return nil, errors.Wrap(err, "performing smart contract request")
 	}

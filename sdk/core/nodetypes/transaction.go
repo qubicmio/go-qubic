@@ -30,21 +30,6 @@ type Transaction struct {
 	Signature            [64]byte
 }
 
-func (tx *Transaction) GetUnsignedDigest() ([32]byte, error) {
-	serialized, err := tx.MarshallBinary()
-	if err != nil {
-		return [32]byte{}, errors.Wrap(err, "marshalling tx data")
-	}
-
-	// create digest with data without signature
-	digest, err := common.K12Hash(serialized[:len(serialized)-64])
-	if err != nil {
-		return [32]byte{}, errors.Wrap(err, "hashing tx data")
-	}
-
-	return digest, nil
-}
-
 func (tx *Transaction) MarshallBinary() ([]byte, error) {
 	var buff bytes.Buffer
 	_, err := buff.Write(tx.SourcePublicKey[:])
@@ -87,6 +72,21 @@ func (tx *Transaction) MarshallBinary() ([]byte, error) {
 	}
 
 	return buff.Bytes(), nil
+}
+
+func (tx *Transaction) GetUnsignedDigest() ([32]byte, error) {
+	serialized, err := tx.MarshallBinary()
+	if err != nil {
+		return [32]byte{}, errors.Wrap(err, "marshalling tx data")
+	}
+
+	// create digest with data without signature
+	digest, err := common.K12Hash(serialized[:len(serialized)-64])
+	if err != nil {
+		return [32]byte{}, errors.Wrap(err, "hashing tx data")
+	}
+
+	return digest, nil
 }
 
 func (tx *Transaction) UnmarshallFromReader(r io.Reader) error {
