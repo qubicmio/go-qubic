@@ -226,44 +226,6 @@
         ]
       }
     },
-    "/v1/getBettorsByBetOption": {
-      "get": {
-        "operationId": "QuotteryService_GetBettorsByBetOption",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1BetOptionBettors"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "betId",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "betOption",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "QuotteryService"
-        ]
-      }
-    },
     "/v1/quottery/getActiveBets": {
       "get": {
         "operationId": "QuotteryService_GetActiveBets",
@@ -358,6 +320,44 @@
         "parameters": [
           {
             "name": "betId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QuotteryService"
+        ]
+      }
+    },
+    "/v1/quottery/getBettorsByBetOption": {
+      "get": {
+        "operationId": "QuotteryService_GetBettorsByBetOption",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BetOptionBettors"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "betId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "betOption",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -1218,6 +1218,7 @@
   },
   "host": "api.qubic.org",
   "schemes": [
+    "http",
     "https"
   ]
 }

@@ -48,7 +48,7 @@ service QuotteryService {
 
   rpc GetBettorsByBetOption(GetBettorsByBetOptionRequest) returns (BetOptionBettors) {
     option (google.api.http) = {
-      get: "/v1/getBettorsByBetOption"
+      get: "/v1/quottery/getBettorsByBetOption"
     };
   };
 }
