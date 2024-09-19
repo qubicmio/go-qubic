@@ -1218,7 +1218,6 @@
   },
   "host": "api.qubic.org",
   "schemes": [
-    "http",
     "https"
   ]
 }
