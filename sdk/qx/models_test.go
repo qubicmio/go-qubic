@@ -2,7 +2,6 @@ package qx
 
 import (
 	"bytes"
-	"encoding/binary"
 	"encoding/hex"
 	"github.com/stretchr/testify/require"
 	"testing"
@@ -25,11 +24,8 @@ func Test_EntityOrders_UnmarshallFromReader(t *testing.T) {
 	var testOrder EntityOrder = result[2]
 	var expectedName = []byte{'M', 'L', 'M', 0, 0, 0, 0, 0}
 
-	assetNameBytes := make([]byte, 8)
-	binary.LittleEndian.PutUint64(assetNameBytes, testOrder.AssetName)
-
-	if !bytes.Equal(expectedName, assetNameBytes) {
-		t.Errorf("Order.AssetName expected [%s], got [%s]", expectedName, assetNameBytes)
+	if !bytes.Equal(expectedName, testOrder.AssetName[:]) {
+		t.Errorf("Order.AssetName expected [%s], got [%s]", expectedName, testOrder.AssetName)
 	}
 
 	if testOrder.Price != 700000000 {
