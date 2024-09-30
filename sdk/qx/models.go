@@ -133,7 +133,7 @@ struct qxGetEntityOrder_output{
 
 type EntityOrder struct {
 	Issuer         [32]byte
-	AssetName      uint64
+	AssetName      [8]byte
 	Price          int64
 	NumberOfShares int64
 }
