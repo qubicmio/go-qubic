@@ -140,27 +140,37 @@ type EntityOrder struct {
 
 type EntityOrders []EntityOrder
 
-func (orders *EntityOrders) UnmarshallFromReader(r io.Reader) error {
-	for {
-		var header connector.RequestResponseHeader
-		err := binary.Read(r, binary.BigEndian, &header)
-		if err != nil {
-			return errors.Wrap(err, "reading header")
-		}
+var emptyEntityOrder EntityOrder
 
-		if header.Type == connector.EndResponse {
-			break
-		}
-
-		if header.Type != connector.ContractFunctionResponse {
-			return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
-		}
-
-		var order EntityOrder
-		err = binary.Read(r, binary.LittleEndian, &order)
-
-		*orders = append(*orders, order)
+func (eo *EntityOrders) UnmarshallFromReader(r io.Reader) error {
+	var header connector.RequestResponseHeader
+	err := binary.Read(r, binary.BigEndian, &header)
+	if err != nil {
+		return errors.Wrap(err, "reading header")
 	}
+
+	if header.Type == connector.EndResponse {
+		return nil
+	}
+
+	if header.Type != connector.ContractFunctionResponse {
+		return errors.Errorf("Invalid header type, expected %d, found %d", connector.ContractFunctionResponse, header.Type)
+	}
+
+	receivedOrders := make([]EntityOrder, 256)
+	err = binary.Read(r, binary.LittleEndian, receivedOrders)
+	if err != nil {
+		return errors.Wrap(err, "reading bytes from buffer")
+	}
+
+	orders := make([]EntityOrder, 0, 256)
+	for _, order := range receivedOrders {
+		if order == emptyEntityOrder {
+			continue
+		}
+		orders = append(orders, order)
+	}
+	*eo = orders
 
 	return nil
 }

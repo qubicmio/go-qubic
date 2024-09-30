@@ -1,6 +1,7 @@
 package qx
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/binary"
 	"github.com/pkg/errors"
@@ -56,10 +57,11 @@ func (eoc entityOrdersConverter) ToProto(entityOrders EntityOrders) (*qubicpb.En
 		}
 		assetNameBytes := make([]byte, 8)
 		binary.LittleEndian.PutUint64(assetNameBytes, entityOrder.AssetName)
+
 		order := &qubicpb.EntityOrders_Order{
 			IssuerId:       issuerID.String(),
 			Price:          entityOrder.Price,
-			AssetName:      string(assetNameBytes),
+			AssetName:      string(bytes.TrimRight(assetNameBytes, "\x00")),
 			NumberOfShares: entityOrder.NumberOfShares,
 		}
 
