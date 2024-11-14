@@ -17,7 +17,7 @@ services:
       ## Services
       - "traefik.http.services.qubic-node-proxy.loadbalancer.server.port=8000"
     environment:
-      QUBIC_NODE_PROXY_POOL_NODE_FETCHER_URL: "http://213.170.135.5:8080/status"
+      QUBIC_NODE_PROXY_POOL_NODE_FETCHER_URL: "http://37.27.19.14:8080/status"
     ports:
       - "127.0.0.1:8000:8000"
       - "0.0.0.0:8001:8001"
